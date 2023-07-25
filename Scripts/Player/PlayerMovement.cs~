@@ -1,0 +1,71 @@
+﻿using Beto.Sounds;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public CharacterController controller;
+    public Transform cam;
+
+    public float speed = 12f;
+    public float gravityMultiplier = 2f;
+    public float jumpSpeed = 3f;
+    public float turnSmoothTime = 0.01f;
+
+    private Vector3 velocity;
+    private bool isGrounded;
+
+    private Animator animator;
+    private float turnSmoothVelocity;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        isGrounded = controller.isGrounded;
+
+        Vector3 movement = new Vector3(horizontal, 0f, vertical).normalized;
+
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+
+        if (movement.sqrMagnitude >= 0.05f)
+        {
+            float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+        }
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            Jump();
+        }
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+            animator.SetBool("Jumping", false);
+        }
+
+        velocity.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void Jump()
+    {
+        animator.SetBool("Jumping", true);
+        velocity.y = Mathf.Sqrt(jumpSpeed * Physics.gravity.y * -gravityMultiplier);
+        SoundManager.instance.Play("Jump");
+    }
+}

@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Beto.Sounds;
+using UnityEngine;
+
+public class SettingsPreferences : MonoBehaviour
+{
+
+    private const string PREFS_SFX = "sound_sfx";
+    private const string PREFS_SONG = "sound_song";
+
+
+    public float GetStoredVolumeForType(SoundType soundType)
+    {
+        if (soundType == SoundType.SONG)
+        {
+            return PlayerPrefs.GetFloat(PREFS_SONG, SoundManager.instance.GetVolumeForType(SoundType.SONG)); ;
+        }
+        else if (soundType == SoundType.SFX)
+        {
+            return PlayerPrefs.GetFloat(PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));
+        }
+        else
+        {
+            // default
+            return 0.4f;
+        }
+    }
+}

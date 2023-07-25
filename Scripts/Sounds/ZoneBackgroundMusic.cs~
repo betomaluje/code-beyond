@@ -1,0 +1,15 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Beto.Sounds;
+using UnityEngine;
+
+public class ZoneBackgroundMusic : MonoBehaviour
+{
+    [SerializeField] private string songTheme;
+
+    private void StartMusic()
+    {
+        SoundManager.instance.StopAllBackground();
+        SoundManager.instance.Play(songTheme);
+    }
+}

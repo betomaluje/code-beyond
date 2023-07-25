@@ -1,0 +1,8 @@
+﻿using Doozy.Engine.UI;
+using UnityEngine;
+
+public class GamePlayMenu : MonoBehaviour
+{
+    public UIButton pauseButton;
+    public UIButton resumeButton;
+}

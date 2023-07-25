@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class DialogManager : MonoBehaviour
+{
+    [SerializeField] private string[] instructions;
+    [SerializeField] private TextMeshProUGUI instructionsText;
+
+    private int currentInstruction = 0;
+    private int maxInstructions;
+
+    private void Start()
+    {
+        maxInstructions = instructions.Length;
+    }
+
+    public void NextInstruction()
+    {
+        if (currentInstruction <= maxInstructions)
+        {
+
+        }
+        else
+        {
+            // show end/continue button
+            Debug.Log("show end/continue button");
+        }
+    }
+}

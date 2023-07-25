@@ -1,0 +1,12 @@
+﻿using UnityEngine;
+
+namespace Beto.Health
+{
+    [SerializeField]
+    public interface IHealth
+    {
+        void PerformDamage(int damage);
+
+        void GiveHealth(int health);
+    }
+}

@@ -1,0 +1,27 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ButtonPointer : MonoBehaviour
+{
+    [SerializeField] private float animDuration = 0.5f;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private TextMeshProUGUI menuText;
+    [SerializeField] private AudioSource hoverSound;
+
+    public void OnHoverOn()
+    {
+        backgroundImage.DOFade(1f, animDuration);
+        menuText.DOColor(Color.black, animDuration);
+        hoverSound.Play();
+    }
+
+    public void OnHoverOff()
+    {
+        backgroundImage.DOFade(0f, animDuration);
+        menuText.DOColor(Color.white, animDuration);
+    }
+}

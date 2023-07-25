@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Beto.Sounds;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SoundMenu : MonoBehaviour
+{
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
+    private void Start()
+    {
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+        musicSlider.value = PlayerPrefs.GetFloat(SoundManager.PREFS_SONG, SoundManager.instance.GetVolumeForType(SoundType.SONG));
+        sfxSlider.value = PlayerPrefs.GetFloat(SoundManager.PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));
+    }
+
+    private void SetMusicVolume(float volume)
+    {
+        SoundManager.instance.SetVolumeForType(SoundType.SONG, volume);
+    }
+
+    private void SetSFXVolume(float volume)
+    {
+        SoundManager.instance.SetVolumeForType(SoundType.SFX, volume);
+    }
+
+}

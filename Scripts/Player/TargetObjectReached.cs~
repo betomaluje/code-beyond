@@ -1,0 +1,21 @@
+﻿using UnityEngine;
+
+public class TargetObjectReached : MonoBehaviour
+{
+    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private ObjectArrowPointer arrowPointer;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (LayerMaskUtils.LayerMatchesObject(playerLayer, other.gameObject))
+        {
+            arrowPointer.GoToNextObject(other.transform);
+            ParticleSystem particleSystem = other.GetComponent<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Stop();
+                Destroy(other.gameObject, 2f);
+            }
+        }
+    }
+}

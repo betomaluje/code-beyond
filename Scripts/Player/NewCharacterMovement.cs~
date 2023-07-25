@@ -1,0 +1,20 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using ECM.Controllers;
+using UnityEngine;
+
+public class NewCharacterMovement : BaseCharacterController
+{
+    private PlayerAnimations playerAnimations;
+
+    private void Start()
+    {
+        playerAnimations = GetComponent<PlayerAnimations>();
+    }
+
+    protected override void Animate()
+    {
+        base.Animate();
+    }
+
+}

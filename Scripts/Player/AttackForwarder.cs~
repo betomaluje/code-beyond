@@ -1,0 +1,26 @@
+﻿using UnityEngine;
+
+public class AttackForwarder : MonoBehaviour
+{
+    private AttackManager playerAttack;
+
+    private void Start()
+    {
+        playerAttack = GetComponentInParent<AttackManager>();
+    }
+
+    public void AddEnemy(AttackModel enemy)
+    {
+        playerAttack.AddEnemy(enemy);
+    }
+
+    public void RemoveEnemy(AttackModel enemy)
+    {
+        playerAttack.RemoveEnemy(enemy);
+    }
+
+    public void PerformDamage()
+    {
+        playerAttack.DamageEnemy();
+    }
+}

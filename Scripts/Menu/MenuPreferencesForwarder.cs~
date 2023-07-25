@@ -1,0 +1,40 @@
+﻿using Beto.Sounds;
+using Doozy.Engine.UI;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MenuPreferencesForwarder : MonoBehaviour
+{
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private UIToggle playerCameraToggle;
+
+    private void Start()
+    {
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+        musicSlider.value = SettingsPreferences.instance.GetStoredVolumeForType(SoundType.SONG);
+        sfxSlider.value = SettingsPreferences.instance.GetStoredVolumeForType(SoundType.SFX);
+
+        playerCameraToggle.OnValueChanged.AddListener(SetPlayerRotateWithMouse);
+        playerCameraToggle.IsOn = SettingsPreferences.instance.GetPlayerRotateWithMouse();
+    }
+
+    private void SetMusicVolume(float volume)
+    {
+        SettingsPreferences.instance.SetVolumeForType(SoundType.SONG, volume);
+    }
+
+    private void SetSFXVolume(float volume)
+    {
+        SettingsPreferences.instance.SetVolumeForType(SoundType.SFX, volume);
+    }
+
+    private void SetPlayerRotateWithMouse(bool shouldRotate)
+    {
+        FindObjectOfType<NewCharacterMovement>()?.SetRotation(shouldRotate);
+        SettingsPreferences.instance.SetPlayerRotateWithMouse(shouldRotate);
+    }
+
+}
